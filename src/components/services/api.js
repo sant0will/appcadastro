@@ -13,7 +13,8 @@ const api = {
     return 'Error'
   },
 
-  saveUser: (callback) => {
+  saveUser: (callback, user) => {
+    // console.log(user);
     fetch('http://apicadastro.herokuapp.com/api/users', {
       method: 'POST',
       headers: {
@@ -21,13 +22,18 @@ const api = {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        first_name: 'tap',
-        last_name: 'tap',
-        phone: 'tap',
-        email: 'tap',
+        first_name: user[0],
+        last_name: user[1],
+        phone: user[2],
+        email: user[3],
       }),
+    }).then(response => {
+      callback(response);
+    }).catch((error) => { 
+      console.log(error.message)
     });
   }
+
 };
 
 export default api;
