@@ -13,18 +13,21 @@ const api = {
     return 'Error'
   },
 
-//   services: (callback) => {
-//     //186.225.11.114
-//     axios.get('http://192.168.0.23/apiapp/public/api/servicos')
-//     .then(response => {
-//       console.log('response: '+response);
-//       callback(response.data.data);
-//     }).catch((error) => { 
-//       console.log(error.message)
-//     });
-//     return 'Error'
-//   },
-
+  saveUser: (callback) => {
+    fetch('http://apicadastro.herokuapp.com/api/users', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        first_name: 'tap',
+        last_name: 'tap',
+        phone: 'tap',
+        email: 'tap',
+      }),
+    });
+  }
 };
 
 export default api;

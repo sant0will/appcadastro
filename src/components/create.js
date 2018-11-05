@@ -9,8 +9,11 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View, 
+  TouchableHighlight,
+  Image
 } from 'react-native';
+import api from './services/api';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -20,12 +23,24 @@ const instructions = Platform.select({
 });
 
 export default class App extends Component {
+
+  saveUser() {
+    api.saveUser((res) => {
+        if(res.status == 200){
+          console.log(res);
+        }            
+    });  
+  } 
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          create
-        </Text>
+        <TouchableHighlight
+          style={styles.button}
+          onPress={() => { this.saveUser() }}
+        >
+          <Image source={require('./assets/search.png')} style={{ alignSelf: 'center', width: 30, height: 30 }}/>
+        </TouchableHighlight>     
       </View>
     );
   }
