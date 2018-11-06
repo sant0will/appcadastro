@@ -1,18 +1,22 @@
+//Importação de componentes utilizados
 import React, { Component } from 'react';
 import {
-  Modal,
-  Dimensions,
-  StyleSheet,
-  Text,
-  View, 
-  TouchableHighlight,
-  Image, 
-  Button
+    Modal,
+    Dimensions,
+    StyleSheet,
+    Text,
+    View, 
+    TouchableHighlight,
+    Image, 
+    Button,
+    Alert
 } from 'react-native';
 import api from './services/api';
 import FloatingLabelInput from './services/FloatingLabelInput';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Actions } from 'react-native-router-flux';
+
+//Váriaveis de uso
 let width = Dimensions.get('window').width;
 let height = Dimensions.get('window').height;
 const inputColor = "rgba(0,150,136,1)";
@@ -35,6 +39,7 @@ export default class App extends Component {
         };
     }
 
+    //Modal de carregamento
     _renderModalSpinner = () => (
         <View      
             style={{
@@ -48,7 +53,7 @@ export default class App extends Component {
             <Spinner visible={this.state.visibleModal === 1} textContent={'Enviando...'} animation={'slide'} textStyle={{color: '#FFF'}} />
         </View>
     );
-
+    //Modal de sucesso no cadastro
     _renderModalSuccess = () => (
         <View      
             style={{
@@ -60,7 +65,7 @@ export default class App extends Component {
             }}
         >
             <Image source={require('./assets/success.png')} style={styles.imageModal}/>
-            <Text style={styles.textModal}>Usuário Cadastrado com succeso!</Text>        
+            <Text style={styles.textModal}>Usuário cadastrado com succeso!</Text>        
             <Button
                 onPress={() => { this.setState({ visibleModal: 0 }), Actions.dashboard() }}
                 title="Voltar"
@@ -68,7 +73,7 @@ export default class App extends Component {
             />            
         </View>
     );
-
+    //Modal de erro no cadastro
     _renderModalError = () => (
         <View      
             style={{
@@ -89,14 +94,16 @@ export default class App extends Component {
         </View>
     );
 
+    // Função de cadastro do novo usuário
     saveUser() {
+        // Verificação se os dados inseridos são valídos
         if(this.state.first_name_valid && this.state.last_name_valid && this.state.phone_valid && this.state.email_valid){
             this.setState({
                 visibleModal: 1,
             });
 
             let arr_user = [this.state.first_name, this.state.last_name, this.state.phone, this.state.email];
-            
+            //Chamada da api com a função saveUser() passando por parametro uma array com os dados
             api.saveUser((res) => {
                 if(res.status == 200){
                     var response = JSON.parse(res._bodyInit).result;
@@ -111,14 +118,25 @@ export default class App extends Component {
                     }
                 }            
             }, arr_user); 
-        } 
+        }else{
+            Alert.alert(
+                'Dados Inválidos!',
+                'Confira os dados inseridos!',
+                [
+                  {text: 'Ok', style: 'cancel'},
+                ],
+                { cancelable: false }
+            )
+        }
     } 
 
     render() {
         return (
         <View style={styles.container}>
             <Text style={{ color: labelColor, alignSelf: "center", fontSize: 20 }}>Dados do Usuário</Text>
+            {/* Formulário com os inputs necessários */}
             <View style={styles.groupInput}>
+                {/* Nome */}
                 <FloatingLabelInput
                     label="Nome *"
                     mask="name"
@@ -129,6 +147,7 @@ export default class App extends Component {
                     onChangeText={text => this.setState({first_name: text})}
                     error='O nome informado é inválido'
                 />
+                {/* Sobrenome */}
                 <FloatingLabelInput
                     label="Sobrenome *"
                     mask="name"
@@ -139,6 +158,7 @@ export default class App extends Component {
                     onChangeText={text => this.setState({last_name: text})}
                     error='O nome informado é inválido'
                 />
+                {/* Telefone */}
                 <FloatingLabelInput
                     label="Telefone *"
                     mask="cel-phone"
@@ -151,6 +171,7 @@ export default class App extends Component {
                     error='O número de telefone informado é inválido'
                     keyboardType='numeric'
                 />
+                {/* E-mail */}
                 <FloatingLabelInput
                     label="E-mail *"
                     mask="e-mail"
@@ -164,13 +185,14 @@ export default class App extends Component {
                     autoCapitalize='none'
                 />
             </View>
-            
+            {/* Botão de envio do form com informações do usuário */}
             <TouchableHighlight
                 style={styles.button}
                 onPress={() => { this.saveUser() }}
             >
                 <Image source={require('./assets/sent.png')} style={{ alignSelf: 'center' }}/>
             </TouchableHighlight>  
+            {/* Modal de carregamento */}
             <Modal
                 transparent
                 visible={this.state.visibleModal === 1}
@@ -179,6 +201,7 @@ export default class App extends Component {
             >
                 {this._renderModalSpinner()} 
             </Modal>    
+            {/* Modal de sucesso no cadastro */}
             <Modal
                 visible={this.state.visibleModal === 2}
                 animationType={'slide'}
@@ -186,6 +209,7 @@ export default class App extends Component {
             >
                 {this._renderModalSuccess()} 
             </Modal> 
+            {/* Modal de erro no cadastro */}
             <Modal                
                 visible={this.state.visibleModal === 3}
                 animationType={'slide'}
@@ -198,6 +222,7 @@ export default class App extends Component {
     }
 }
 
+//Estilos
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -210,7 +235,7 @@ const styles = StyleSheet.create({
     button:{
         justifyContent: "center",
         alignSelf: "center",
-        backgroundColor: "rgba(255,255,255,0.2)", 
+        backgroundColor: "rgba(255,255,255,0.05)", 
         borderRadius:7, 
         width: width*0.35,
         height: height*0.20

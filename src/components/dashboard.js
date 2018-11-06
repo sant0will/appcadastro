@@ -1,9 +1,13 @@
+//Importação de componentes utilizados
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, StatusBar, Image, TouchableHighlight, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
+//Váriaveis de uso
 let width = Dimensions.get('window').width;
 
+
+//Criação do componente
 export default class Dashboard extends Component {
     render() {
         return (
@@ -12,14 +16,17 @@ export default class Dashboard extends Component {
                     backgroundColor={ "#000000" }
                 />
                 <View>
+                    {/* Logo */}
                     <Image source={require('./assets/icon.png')} style={{ alignSelf: 'center', width: 200, height: 200, bottom: 50 }}/>
                     <View>
+                        {/* Botão de Cadastro */}
                         <TouchableHighlight
                             style={styles.button}
                             onPress={() => { Actions.usercreate() }}
                         >
                             <Text style={styles.textButton}> Cadastrar </Text>
                         </TouchableHighlight>
+                        {/* Botão de visualização */}
                         <TouchableHighlight
                             style={styles.button}
                             onPress={() => { Actions.usershow() }}
@@ -33,6 +40,7 @@ export default class Dashboard extends Component {
     }
 }
 
+//Estilos
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -41,10 +49,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#000000',
     },
     button:{
-        backgroundColor: 'rgba(0,150,136,1)', 
-        borderRadius:7, 
+        backgroundColor: 'rgba(0,150,136,0.7)', 
+        borderRadius:5, 
         width: width*0.80,
-        padding: 40, 
+        padding: 30, 
         margin: 15,
     },
     textButton:{

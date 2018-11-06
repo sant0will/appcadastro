@@ -1,8 +1,20 @@
+//Importação de componentes utilizados
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, StatusBar, ScrollView, TouchableHighlight, Dimensions, Modal, Image } from 'react-native';
+import { 
+    Text, 
+    View, 
+    StyleSheet, 
+    StatusBar, 
+    ScrollView, 
+    Dimensions, 
+    Modal, 
+    Image 
+} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Accordion from 'react-native-collapsible/Accordion';
 import api from './services/api';
+
+//Váriaveis de uso
 let width = Dimensions.get('window').width;
 
 export default class Show extends Component {
@@ -15,6 +27,7 @@ export default class Show extends Component {
         };
     }
 
+    //Modal de carregamento
     _renderModalSpinner = () => (
         <View      
             style={{
@@ -29,6 +42,7 @@ export default class Show extends Component {
         </View>
     );
 
+    //Função de busca dos usuários, utilizando o service api e a função getAllUsers()
     getUsers() {
         this.setState({
             visibleModal: 1,
@@ -47,6 +61,7 @@ export default class Show extends Component {
         }
     }    
 
+    // Renderização dos componentes do Accordion para listagem dos usuários
     _renderHeader = section => {
         return (
         <View style={styles.header}>
@@ -69,13 +84,19 @@ export default class Show extends Component {
         this.setState({ activeSections });
     };
 
+    //Chamada da função de busca de usuários ao montar a tela
+    componentDidMount(){
+        this.getUsers();
+    }
+
     render() {
         return (
 
             <View style={styles.container}>
                 <StatusBar
                     backgroundColor={ "#000000" }
-                />                
+                />      
+                {/* Listagem dos usuários */}
                 <ScrollView>
                     <Accordion
                         sections={this.state.users}
@@ -84,13 +105,8 @@ export default class Show extends Component {
                         renderContent={this._renderContent}
                         onChange={this._updateSections}
                     />
-                </ScrollView>       
-                <TouchableHighlight
-                    style={styles.button}
-                    onPress={() => { this.getUsers() }}
-                >
-                    <Image source={require('./assets/search.png')} style={{ alignSelf: 'center', width: 30, height: 30 }}/>
-                </TouchableHighlight>     
+                </ScrollView>
+                {/* Modal de carregamento */}
                 <Modal
                     transparent
                     visible={this.state.visibleModal === 1}
@@ -104,6 +120,7 @@ export default class Show extends Component {
     }
 }
 
+//Estilos
 const styles = StyleSheet.create({
     container: {
         flex: 1,
