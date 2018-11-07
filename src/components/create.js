@@ -50,7 +50,7 @@ export default class App extends Component {
                 backgroundColor: 'transparent'
             }}
         >
-            <Spinner visible={this.state.visibleModal === 1} textContent={'Enviando...'} animation={'slide'} textStyle={{color: '#FFF'}} />
+            <Spinner visible={this.state.visibleModal === 1} textContent={'Enviando...'} animation={'slide'} textStyle={{color: '#FFF', fontFamily:"LOVES"}} />
         </View>
     );
     //Modal de sucesso no cadastro
@@ -65,7 +65,7 @@ export default class App extends Component {
             }}
         >
             <Image source={require('./assets/success.png')} style={styles.imageModal}/>
-            <Text style={styles.textModal}>Usuário cadastrado com succeso!</Text>        
+            <Text style={styles.textModal}>Usuario cadastrado com succeso!</Text>        
             <Button
                 onPress={() => { this.setState({ visibleModal: 0 }), Actions.dashboard() }}
                 title="Voltar"
@@ -85,7 +85,7 @@ export default class App extends Component {
             }}
         >
             <Image source={require('./assets/error.png')} style={styles.imageModal}/>
-            <Text style={styles.textModal}>Ocorreu um erro ao cadastrar o usuário!</Text>        
+            <Text style={styles.textModal}>Ocorreu um erro ao cadastrar o usuario!</Text>        
             <Button
                 onPress={() => { this.setState({ visibleModal: 0 }), Actions.dashboard() }}
                 title="Voltar"
@@ -133,7 +133,7 @@ export default class App extends Component {
     render() {
         return (
         <View style={styles.container}>
-            <Text style={{ color: labelColor, alignSelf: "center", fontSize: 20 }}>Dados do Usuário</Text>
+            <Text style={{ fontFamily: "LOVES", color: labelColor, alignSelf: "center", fontSize: 30 }}>Dados do Usuario</Text>
             {/* Formulário com os inputs necessários */}
             <View style={styles.groupInput}>
                 {/* Nome */}
@@ -229,10 +229,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#000',
     },
     groupInput: {
-        top: height*0.12,
+        top: height*0.15,
         height: height*0.50,
     },
     button:{
+        top: height*0.1,
         justifyContent: "center",
         alignSelf: "center",
         backgroundColor: "rgba(255,255,255,0.05)", 
@@ -251,6 +252,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     textModal:{
+        fontFamily:"LOVES",
         fontSize: 18, 
         color: inputColor, 
         margin: 20

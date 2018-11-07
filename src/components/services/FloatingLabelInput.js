@@ -92,14 +92,9 @@ export default class FloatingLabelInput extends Component {
         inputRange: [0, 1],
         outputRange: [22, 0],
       }),
-      fontSize: this._animatedIsFocused.interpolate({
-        inputRange: [0, 1],
-        outputRange: [16, 12],
-      }),
-      color: this._animatedIsFocused.interpolate({
-        inputRange: [0, 1],
-        outputRange: [textColor, textColor],
-      }),
+      fontSize: 20,
+      color: textColor,
+      fontFamily: "LOVES",
     };
 
     return (
