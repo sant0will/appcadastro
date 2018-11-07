@@ -38,7 +38,7 @@ export default class Show extends Component {
                 backgroundColor: 'transparent'
             }}
         >
-            <Spinner visible={this.state.visibleModal === 1} textContent={'Buscando...'} animation={'slide'} textStyle={{color: '#FFF'}} />
+            <Spinner visible={this.state.visibleModal === 1} textContent={'Buscando...'} animation={'slide'} textStyle={{color: '#00ff00', fontFamily:"LOVES"}} />
         </View>
     );
 
@@ -146,13 +146,16 @@ const styles = StyleSheet.create({
         height: 40,
     },
     headerText:{
-        fontSize: 18,
+        fontFamily:"LOVES",
+        fontSize: 22,
         color: "#fff",
         alignSelf: "center",
     },
     contentText:{
+        alignSelf:"center",
+        fontFamily:"LOVES",
         justifyContent: 'center',
-        fontSize: 18,
+        fontSize: 20,
         color: "#000",
         alignSelf: "center",
     },
